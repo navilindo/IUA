@@ -1,0 +1,60 @@
+<div id="login">
+
+	<div class="w3-container">
+	<div class="w3-container w3-blue w3-animate-right">
+		<h3>Login</h3>
+	</div>	
+	<form class="w3-container" action="page.php" method="post">
+		<input class="w3-input" type="text" name="userName">
+			<label>Username</label>
+		<input class="w3-input" type="password" name="userpass">
+			<label>Password</label>
+		</input>
+		<br></br>
+		<button class="w3-btn w3-black" name="login"><b>Login</b></button>
+		<button class="w3-btn w3-black"><b>Exit</b></button>
+	</form>  
+	</div>
+	</div>
+
+	 
+	<script type="javascript/text">
+		
+	
+	</script>
+	<?php
+		
+				$con = mysql_connect("localhost","Hassan","root","lab7");
+				
+				mysql_select_db("lab7");
+				
+    			if(isset($_POST['login'])){
+					$name = $_POST['userName'];
+					$pass = $_POST['userpass'];
+					 
+				    $result = mysql_query("select * from students where name = '$name' and pass = '$pass'") or die(mysql_error());
+				  
+				    $row = mysql_fetch_array($result);
+				 
+				    if($row['name'] == $name && $row['pass']== $pass){
+					  
+					    echo "login successful, welcome " . $name . "<br />";
+						echo "<a href='datageneral.php'>";
+						echo "go to your page";
+						echo "</a><br />";
+						//echo "<a href='tree.php'>";
+						//echo "try to add a student info";
+						echo "</a>";
+						
+						$_SESSION['user'] = $name;
+						$_SESSION['pass'] = $pass;
+						
+				    }
+				    else {
+					    echo "login failed,check your username and password and try again";
+				    }
+				    mysql_close();
+				    }
+			  ?>
+	?>
+</div>
